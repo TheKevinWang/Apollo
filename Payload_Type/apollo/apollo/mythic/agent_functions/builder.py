@@ -149,7 +149,7 @@ NOTE: v2.3.2+ has a different bof loader than 2.3.1 and are incompatible since t
                                 templateFile = templateFile.replace("HTTP_ADDITIONAL_HEADERS_HERE", "")
                 with open(csFile, "wb") as f:
                     f.write(templateFile.encode())
-            command = f"dotnet build -c release -p:Platform=\"Any CPU\" -o {agent_build_path.name}/Release/"
+            command = f"dotnet build /p:DebugType=None /p:DebugSymbols=false -c release -p:Platform=\"Any CPU\" -o {agent_build_path.name}/Release/"
             #command = "rm -rf packages/*; nuget restore -NoCache -Force; msbuild -p:Configuration=Release -p:Platform=\"Any CPU\""
             await SendMythicRPCPayloadUpdatebuildStep(MythicRPCPayloadUpdateBuildStepMessage(
                 PayloadUUID=self.uuid,
@@ -258,7 +258,7 @@ NOTE: v2.3.2+ has a different bof loader than 2.3.1 and are incompatible since t
                                 / "loader.bin"
                             )
                             shutil.move(shellcode_path, working_path)
-                            command = f"dotnet build -c release -p:OutputType=WinExe -p:Platform=\"Any CPU\""
+                            command = f"dotnet build /p:DebugType=None /p:DebugSymbols=false -c release -p:OutputType=WinExe -p:Platform=\"Any CPU\""
                             proc = await asyncio.create_subprocess_shell(
                                 command,
                                 stdout=asyncio.subprocess.PIPE,
